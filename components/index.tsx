@@ -38,7 +38,7 @@ const GoogleLoginButton: React.FC = () => {
 
   return (
     <GoogleLogin
-      clientId="422653780828-djdcn61s7f1ifculsfgb6ihsi6e0s2f3.apps.googleusercontent.com"
+      clientId="422653780828-r9nmp4bj71c8hu9f7n2g0p9qbhgvhmkq.apps.googleusercontent.com"
       buttonText="Login with Google"
       onSuccess={responseGoogle}
       onFailure={onError}
