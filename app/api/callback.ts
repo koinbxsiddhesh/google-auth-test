@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { OAuth2Client } from 'google-auth-library';
 import { NextResponse } from 'next/server';
 
-const client = new OAuth2Client('YOUR_CLIENT_ID.apps.googleusercontent.com'); // Replace with your client ID
+const client = new OAuth2Client('422653780828-djdcn61s7f1ifculsfgb6ihsi6e0s2f3.apps.googleusercontent.com'); // Replace with your client ID
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -27,7 +27,7 @@ async function handleSignIn(idToken: string, res: NextApiResponse) {
     // Verify the token
     const ticket = await client.verifyIdToken({
       idToken,
-      audience: 'YOUR_CLIENT_ID.apps.googleusercontent.com', // Specify the CLIENT_ID of the app that accesses the backend
+      audience: '422653780828-djdcn61s7f1ifculsfgb6ihsi6e0s2f3.apps.googleusercontent.com',
     });
 
     const payload = ticket.getPayload();

@@ -26,7 +26,7 @@ const GoogleLoginButton: React.FC = () => {
     window.gapi.load("auth2", () => {
       window.gapi.auth2.init({
         client_id:
-          "422653780828-r9nmp4bj71c8hu9f7n2g0p9qbhgvhmkq.apps.googleusercontent.com",
+          "422653780828-djdcn61s7f1ifculsfgb6ihsi6e0s2f3.apps.googleusercontent.com",
       });
     });
   };
