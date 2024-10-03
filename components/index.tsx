@@ -1,54 +1,50 @@
-'use client'
-import React, { useEffect } from "react";
+
+'use client';
+import React from 'react';
+import { GoogleLogin } from 'react-google-login';
 
 const GoogleLoginButton: React.FC = () => {
-  useEffect(() => {
-    const loadScript = () => {
-      const script = document.createElement("script");
-      script.src = "https://apis.google.com/js/api:client.js";
-      script.async = true;
-      document.body.appendChild(script);
-    };
+  const responseGoogle = async (response: any) => {
+    console.log('Response:', response);
 
-    loadScript();
+    if (response?.profileObj) {
+      const id_token = response.tokenId;
 
-    // Cleanup script on unmount
-    return () => {
-      const scriptTags = document.querySelectorAll(
-        'script[src="https://apis.google.com/js/api:client.js"]'
-      );
-      scriptTags.forEach((tag) => tag.remove());
-    };
-  }, []);
+      // Send the token to your backend for verification
+      try {
+        const res = await fetch('/api/auth/callback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ idToken: id_token }),
+        });
 
-  const handleClientLoad = () => {
-    // @ts-expect-error
-    window.gapi.load("auth2", () => {
-      window.gapi.auth2.init({
-        client_id:
-          "422653780828-djdcn61s7f1ifculsfgb6ihsi6e0s2f3.apps.googleusercontent.com",
-      });
-    });
+        if (res.ok) {
+          // Redirect or perform any actions upon successful login
+          window.location.href = '/callback';
+        } else {
+          console.error('Token verification failed');
+        }
+      } catch (error) {
+        console.error('Error during token verification:', error);
+      }
+    }
   };
 
-  const onSignIn = (googleUser: gapi.auth2.GoogleUser) => {
-    const profile = googleUser.getBasicProfile();
-    console.log("ID: " + profile.getId());
-    console.log("Name: " + profile.getName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-
-    const id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
+  const onError = (error: any) => {
+    console.error('Login failed:', error);
   };
 
-  const signIn = () => {
-    handleClientLoad();
-    const auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signIn().then(onSignIn);
-  };
-
-  return <button onClick={signIn}>Login with Google</button>;
+  return (
+    <GoogleLogin
+      clientId="422653780828-djdcn61s7f1ifculsfgb6ihsi6e0s2f3.apps.googleusercontent.com"
+      buttonText="Login with Google"
+      onSuccess={responseGoogle}
+      onFailure={onError}
+      cookiePolicy={'single_host_origin'}
+    />
+  );
 };
 
 export default GoogleLoginButton;
