@@ -22,6 +22,7 @@ const GoogleLoginButton: React.FC = () => {
   }, []);
 
   const handleClientLoad = () => {
+    // @ts-ignore
     window.gapi.load("auth2", () => {
       window.gapi.auth2.init({
         client_id:
