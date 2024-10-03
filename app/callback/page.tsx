@@ -1,6 +1,8 @@
 import React from 'react';
 
 const CallbackPage: React.FC = () => {
+  console.log('line 4 callback');
+  
   return (
     <div>
       <h1>Login Successful!</h1>
