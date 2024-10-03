@@ -1,5 +1,3 @@
-'use client'
-
 import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 
@@ -8,14 +6,14 @@ function App() {
     console.log(response);
   };
   const errorMessage: any = (error: any) => {
-    console.log("error on lline 9", error);
+    console.log("error on",error);
   };
   return (
     <div>
       <h2>React Google Login</h2>
       <br />
       <br />
-      <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+      <GoogleLogin login_uri="https://google-auth-test-alpha.vercel.app/api/callback"  onSuccess={responseMessage} onError={errorMessage} />
     </div>
   );
 }
